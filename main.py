@@ -17,9 +17,6 @@ bread_crumb_category = ""
 for bread_crumb_item in soup.select(".breadcrumb_wrap .breadcrumbList .breadcrumbListItem:not(:first-child)"):
     bread_crumb_category = bread_crumb_category + bread_crumb_item.get_text(strip=True) + "/"
 
-print("bread_crumb_category: ")
-print(bread_crumb_category)
-print()
 sheet1.write(0, 0, "Bread crumb category")
 sheet1.write(1, 0, bread_crumb_category)
 
@@ -27,9 +24,6 @@ image_urls = ""
 for item in soup.select(".slider-frame .slider-list .slider-slide"):
     image_urls = image_urls + item.find("img").get("src") + "\n"
 
-print("image_urls: ")
-print(image_urls)
-print()
 sheet1.write(0, 1, "Side image urls")
 sheet1.write(1, 1, image_urls)
 
@@ -40,24 +34,15 @@ article_header = article_info.select(".articleNameHeader")[0]
 
 category = article_header.select(".articleOtherLabel")[0].get_text(strip=True) + \
            " " + article_header.select(".groupName")[0].get_text(strip=True)
-print("category: ")
-print(category)
-print()
 sheet1.write(0, 2, "Category")
 sheet1.write(1, 2, category)
 
 
 product_name = article_header.select("h1.itemTitle")[0].get_text(strip=True)
-print("product_name: ")
-print(product_name)
-print()
 sheet1.write(0, 3, "Product Name")
 sheet1.write(1, 3, product_name)
 
 pricing = article_info.select("div.articlePrice")[0].get_text(strip=True)
-print("pricing: ")
-print(pricing)
-print()
 sheet1.write(0, 4, 'Pricing')
 sheet1.write(1, 4, pricing)
 
@@ -68,20 +53,12 @@ for size_li in add_to_cart_form.select("ul li"):
     text = size_li.get_text(strip=True)
     if text:
         available_size = available_size + text + " | "
-
-print("available_size: ")
-print(available_size)
-print()
 sheet1.write(0, 5, 'Available Size')
 sheet1.write(1, 5, available_size)
 
 sense_of_the_size = ""
 for sense_item in add_to_cart_form.select(".sizeFitBar .label span"):
     sense_of_the_size = sense_of_the_size + sense_item.get_text(strip=True) + " | "
-
-print("sense_of_the_size: ")
-print(sense_of_the_size)
-print()
 sheet1.write(0, 6, 'Sense of the size')
 sheet1.write(1, 6, sense_of_the_size)
 
@@ -99,36 +76,22 @@ for article in coordinates_article:
     coordinated_product += product_name + "\n" + pricing + "\n" + \
                            product_number + "\n" + image_url + \
                            "\n" + product_page_url + "\n\n"
-
-print("coordinated product: ")
-print(coordinated_product)
-print()
 sheet1.write(0, 7, 'Coordinated product')
 sheet1.write(1, 7, coordinated_product)
 
 article_promotion = soup.select("div.pdpContainer .articlePromotion")[0]
 title_of_description = article_promotion.select("h4.heading")[0].get_text(strip=True)
-print("title_of_description: ")
-print(title_of_description)
-print()
 sheet1.write(0, 8, 'Title of description')
 sheet1.write(1, 8, title_of_description)
 
 general_description_of_product = article_promotion.select(
     "div .description .details .commentItem-mainText")[0].get_text(strip=True)
-print("general_description_of_product: ")
-print(general_description_of_product)
-print()
 sheet1.write(0, 9, 'General description of product')
 sheet1.write(1, 9, general_description_of_product)
 
 general_description_itemization = ""
 for item in article_promotion.select("div .description .articleFeatures li"):
     general_description_itemization += item.get_text(strip=True) + "\n"
-
-print("general_description_itemization: ")
-print(general_description_itemization)
-print()
 sheet1.write(0, 10, 'General description itemization')
 sheet1.write(1, 10, general_description_itemization)
 
@@ -147,17 +110,8 @@ for header_index in range(len(header_data)):
         record += body_val + "|"
     record += "\n"
     table_size_information += record
-
-print("table_size_information: ")
-print(table_size_information)
-print()
 sheet1.write(0, 11, 'Table size information')
 sheet1.write(1, 11, table_size_information)
-
-# product_number = article_promotion.select(
-#     "div .description .articleFeatures .test-articleId .test-itemComment-article")[0].get_text(strip=True)
-# print(product_number)
-
 
 review = product_data["model"]["review"]
 reviewSeoLd = review["reviewSeoLd"]
@@ -167,8 +121,6 @@ number_of_reviews = review["reviewCount"]
 recommended_rate = str(review["ratingAvg"])+"%"
 
 review_rating_rate = str(rating) + "\n" + str(number_of_reviews) + "\n" + str(recommended_rate) + "\n"
-print("review, number_of_reviews, recommended_rate: ")
-print(review_rating_rate)
 sheet1.write(0, 12, 'Review/rating/Rate')
 sheet1.write(1, 12, review_rating_rate)
 
@@ -181,8 +133,6 @@ for review in reviewSeoLd:
     review_descriptions = review["reviewBody"]
     review_info += date + "\n" + rating + "\n" + review_title + "\n" + review_descriptions + "\n\n"
 
-print("review_info: ")
-print(review_info)
 sheet1.write(0, 13, 'Review information')
 sheet1.write(1, 13, review_info)
 
